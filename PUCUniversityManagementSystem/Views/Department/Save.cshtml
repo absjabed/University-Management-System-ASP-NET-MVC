@@ -1,0 +1,61 @@
+﻿@using UniversityManagementSystem.Models
+@model UniversityManagementSystem.Models.Department
+
+@{
+    ViewBag.Title = "Add Department";
+    AlartType alartType = ViewBag.alart;
+    
+}
+<script src="~/Scripts/jquery-2.2.0.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<div class="col-sm-4"></div>
+
+<div class="col-sm-4" style="padding-top: 30px">
+
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading" style="text-align: center"><h4><strong>Add New Department</strong></h4></div>
+        <div class="panel-body ">
+                @using (Html.BeginForm())
+                {
+                    
+                  if (ViewBag.alart != null)
+                {
+                    <div class="alert alert-@alartType.Type">@alartType.Message</div>
+
+                }
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+
+
+
+                        @Html.ValidationSummary(true)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Code, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Code)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Name)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Save" class="btn btn-success btn-block" />
+                            </div>
+                        </div>
+                    </div>
+
+                }
+        </div>
+
+    </div>
+        </div>
+        <div class="col-sm-4"></div>

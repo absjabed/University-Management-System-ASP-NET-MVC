@@ -1,0 +1,74 @@
+﻿@model UniversityManagementSystem.Models.TempClassSchedule
+@{
+    ViewBag.Title = "View Class Schedule";
+}
+
+
+<div class="col-sm-4"></div>
+<div class="col-sm-4" style="padding-top: 30px">
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading" style="text-align: center"><h4><strong>Class Schedule and Room Allocation Information</strong></h4>
+        </div>
+        <div class="panel-body">
+
+                <table class="table table-striped">
+                    <tr>
+                        <td>@Html.LabelFor(x => x.DepartmentId)</td>
+                        <td>
+                            <select id="DepartmentId" class="form-control">
+                                <option value="">Select department</option>
+                                @foreach (var dept in ViewBag.Departments)
+                                {
+                                    <option value="@dept.Id">@dept.Name</option>
+                                }
+                            </select>
+                        </td>
+                        <td>@Html.ValidationMessageFor(m => m.DepartmentId)</td>
+                    </tr>
+                </table>
+            
+        </div>
+    </div>
+    </div>
+        <div class="col-sm-4"></div>
+<div class="container">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        <table id="SchduleTable" class=" table table-hover table-bordered">
+            <thead class="table-striped">
+                <tr>
+                    <th class="info" style="width: 150px;">Course Code</th>
+                    <th class="success" style="width: 220px;">Course Name</th>
+                    <th class="danger" style="width: 350px;">Schedule Info</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="col-sm-2">
+    </div>
+</div>
+       
+        @section Scripts {
+            <script>
+                $(document).ready(function () {
+                    $("#DepartmentId").change(function () {
+                        $('#SchduleTable tbody').empty();
+                        var deptId = $("#DepartmentId").val();
+                        var json = { departmentId: deptId, };
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("GetClassScheduleByDepartment", "ClassRoom")',
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(json),
+                            success: function (data) {
+                                $.each(data, function (key, value) {
+                                    $("#SchduleTable tbody").append('<tr><td>' + value.CourseCode + '</td><td>' + value.CourseName + '</td><td>' + value.ScheduleInfo + '</td></tr>');
+                                });
+                            }
+                        });
+                    });
+                });
+            </script>
+        }

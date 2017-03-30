@@ -1,0 +1,47 @@
+﻿@using UniversityManagementSystem.Models
+
+@{
+    ViewBag.Title = "UnAssign";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    AlartType alartType = ViewBag.alart;
+}
+
+<div class="col-sm-4"></div>
+<div class="col-sm-4" style="padding-top: 30px">
+    <div class="panel panel-danger">
+        <!-- Default panel contents -->
+        <div class="panel-heading" style="text-align: center"><h4><strong>Unassign All Courses</strong></h4></div>
+        <div class="panel-body">
+
+            <form method="POST">
+
+                @if (ViewBag.alart != null)
+                {
+                <div class="alert alert-@alartType.Type">@alartType.Message</div>
+
+                }
+
+                <div align="center">
+                    <input type="submit" class="btn btn-danger btn-lg" value="Unassign Courses" data-confirm="Are you sure to UnAssign All Courses?" />
+                </div>
+            </form>
+
+
+        </div></div></div>
+
+
+
+            @section scripts{
+
+                <script src="~/Scripts/jquery-2.2.0.js"></script>
+                <script src="~/Scripts/jquery.validate.js"></script>
+                <script>
+                    $(document).ready(function () {
+                        jQuery('[data-confirm]').click(function (e) {
+                            if (!confirm(jQuery(this).attr("data-confirm"))) {
+                                e.preventDefault();
+                            }
+                        });
+                    });
+                </script>
+            }
